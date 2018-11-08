@@ -2,8 +2,8 @@
 //  ApprovalCollectionViewCell.swift
 //  Worklist
 //
-//  Created by Vaibhav Malhotra on 31/10/18.
-//  Copyright © 2018 Vaibhav Malhotra. All rights reserved.
+//  Created by Bimalesh Sahoo on 31/10/18.
+//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
 //
 
 import UIKit
@@ -28,9 +28,12 @@ class ApprovalCollectionViewCell: UITableViewCell {
     }
 
     @IBAction func approveTapped(_ sender: Any) {
+    utilities.displayAlert(title: "Alert!", message: "Request Approved Successfully")
+    
     }
     
     @IBAction func rejectTapped(_ sender: Any) {
+    utilities.displayAlert(title: "Alert!", message: "Request Rejected Successfully")
     }
     
 }

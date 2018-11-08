@@ -2,8 +2,8 @@
 //  DashboardViewController.swift
 //  Worklist
 //
-//  Created by Vaibhav Malhotra on 31/10/18.
-//  Copyright © 2018 Vaibhav Malhotra. All rights reserved.
+//  Created by Bimalesh Sahoo on 31/10/18.
+//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
 //
 
 import UIKit
@@ -12,11 +12,23 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
     
     var taskDataList  = [TaskData]()
     var approvalDataList = [ApprovalData]()
+   
+    @IBOutlet weak var btnAutoApproval: UIButton!
+    @IBOutlet weak var btnFloatStatus: UIButton!
+    @IBOutlet weak var btnFloatTask: UIButton!
+    @IBOutlet weak var btnFloatApproval: UIButton!
+    @IBOutlet weak var btnFloatClose: UIButton!
+    @IBOutlet weak var floatingBtnView: UIView!
+    
+    @IBOutlet weak var dashboardView: UIView!
+    @IBOutlet weak var taskHeaderView: UIView!
+    
+    @IBOutlet weak var approvalView: UIView!
     
     @IBOutlet weak var tableBg: UIView!
     
-    @IBOutlet weak var taskSee: UILabel!
-    @IBOutlet weak var approvalSee: UILabel!
+    @IBOutlet weak var btnSeeAllApproval: UIButton!
+    @IBOutlet weak var btnApprovalCount: UIButton!
     
     @IBOutlet weak var taskCollectionView: UICollectionView!
 
@@ -33,17 +45,27 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
         taskData()
         approvalData()
         
+        btnApprovalCount.setTitle(String(approvalDataList.count), for: .normal)
+        
         //tableView Corner radius
         self.approvalTableView.layer.cornerRadius = 10
         self.approvalTableView.layer.masksToBounds = true
         
-        //button Styling
-        taskSee.layer.cornerRadius = taskSee.frame.width / 2
-        taskSee.layer.masksToBounds = true
-        approvalSee.layer.cornerRadius = approvalSee.frame.width / 2
-        approvalSee.layer.masksToBounds = true
+        btnApprovalCount.layer.cornerRadius = btnApprovalCount.frame.width / 2
+        btnApprovalCount.layer.masksToBounds = true
         
+        // button actions
+        btnApprovalCount.addTarget(self, action: #selector(seeAllApprovalViewButton), for: .touchUpInside)
+        btnSeeAllApproval.addTarget(self, action: #selector(seeAllApprovalViewButton), for: .touchUpInside)
         
+        //floating btn actions
+        btnFloatClose.addTarget(self, action: #selector(close), for: .touchUpInside)
+        btnFloatApproval.addTarget(self, action: #selector(approval), for: .touchUpInside)
+        btnFloatTask.addTarget(self, action: #selector(task), for: .touchUpInside)
+        btnFloatStatus.addTarget(self, action: #selector(status), for: .touchUpInside)
+        btnAutoApproval.addTarget(self, action: #selector(autoApproval), for: .touchUpInside)
+        
+        //tableview border styling
         tableBg.layer.cornerRadius = 10
         tableBg.layer.masksToBounds = true
         
@@ -53,22 +75,24 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
         tableBg.layer.shadowOpacity = 1.0
         tableBg.layer.masksToBounds = false;
         tableBg.layer.shadowPath = UIBezierPath(roundedRect:tableBg.bounds, cornerRadius:tableBg.layer.cornerRadius).cgPath
-
+        
+        
     }
     
     
-   
+    
+    // task collection view functions
     func taskData() {
         
-        var taskType : [String] = ["My Time", "My Goal", "My Career"]
-        var description : [String] = ["Update Efforts", "Fill G&O", "Update Profile"]
+        var taskType : [String] = ["My Time", "My Goal", "My Career", "My Time"]
+        var description : [String] = ["Update Efforts", "Fill G&O", "Update Profile", "Update Efforts"]
         var priority : [UIImage] = [
             UIImage(named: "medium-icon")!,
-            UIImage(named: "high-icon")!,
-            UIImage(named: "medium-icon")!]
-        var dueDate : [String] = ["Due on 23 June 18", "Due on 20 June 18", "Due on 18 June 18"]
+            UIImage(named: "high")!, UIImage(named: "medium-icon")!, UIImage(named: "medium-icon")!]
+        var dueDate : [String] = ["Due on 23 June 18", "Due on 20 June 18", "Due on 18 June 18", "Due on 23 June 18"]
         
-        for i in 0...2 {
+        
+        for i in 0...3 {
             
             let taskData = TaskData()
             
@@ -85,7 +109,17 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-        return taskDataList.count
+        let count = taskDataList.count
+        
+        if taskDataList.count < 3 {
+            
+            return count
+            
+        } else {
+        
+            return 3
+            
+        }
 
     }
 
@@ -117,23 +151,35 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
         cell.layer.masksToBounds = false;
         cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.layer.cornerRadius).cgPath
         
-        cell.btnMoreItemView.addTarget(self, action: #selector(showMoreCollectionViewButton), for: .touchUpInside)
-   // $$$$$$$$$$$$$$$$$$$$ VM $$$$$$$$$$$
+        cell.btnMoreItemView.addTarget(self, action: #selector(showMoreTaskViewButton), for: .touchUpInside)
+        cell.btnMoreItems.addTarget(self, action: #selector(showMoreTaskViewButton), for: .touchUpInside)
+
+        // viewMoreitem faded
+        
         cell.viewMoreItems.layer.cornerRadius = 10.0
-        cell.viewMoreItems.layer.borderWidth = 1.0
         cell.viewMoreItems.layer.masksToBounds = true
      
         if indexPath.row < 2
         {
             cell.viewMoreItems.isHidden = true
         }
+        
         cell.lblMoreItems.text = "\(taskDataList.count - 3) more tasks"
-        // $$$$$$$$$$$$$$$$$$$$ VM $$$$$$$$$$$
         
         return cell
         
-        
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if taskDataList.count < 3 {
+            
+            showMoreTaskViewButton()
+
+        }
+    
+    }
+    
     
     //collectionView custom height
     
@@ -144,17 +190,17 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     
 
-    //tableView functions below
+    //approval tableView functions below
     
     func approvalData() {
         
-        var type : [String] = ["My Time", "My Financial"]
-        var image : [UIImage] = [UIImage(named: "profile1")!,UIImage(named: "profile2")!]
-        var dueDate : [String] = ["Will be auto approved on 8:30 PM 23 June 2018","Due on 23 June 18"]
-        var description : [String] = ["Annual Leave", "Declaration"]
-        var priority : [UIImage] = [UIImage(named: "medium-icon")!,UIImage(named: "high-icon")!]
+        var type : [String] = ["My Time", "My Financial", "My Time"]
+        var image : [UIImage] = [UIImage(named: "profile1")!,UIImage(named: "profile2")!, UIImage(named: "profile1")!]
+        var dueDate : [String] = ["Will be auto approved on 8:30 PM 23 June 2018","Due on 23 June 18", "Will be auto approved on 8:30 PM 23 June 2018"]
+        var description : [String] = ["Annual Leave", "Declaration", "Annual Leave"]
+        var priority : [UIImage] = [UIImage(named: "medium-icon")!,UIImage(named: "high")!, UIImage(named: "medium-icon")!]
         
-        for i in 0...1 {
+        for i in 0...2 {
         
         let approvalData = ApprovalData()
         
@@ -170,7 +216,6 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return approvalDataList.count
         return 2
     }
     
@@ -191,76 +236,114 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
         cell.profileImage.layer.cornerRadius = (cell.profileImage.frame.width) / 2
         cell.profileImage.layer.masksToBounds = true
         
-        // $$$$$$$$$$$$$$$$$$$$$$$$$ VM $$$$$$$$$$$
-        if (indexPath.row == approvalDataList.count - 1) {
-            cell.separatorInset = UIEdgeInsets(top: 0, left: cell.frame.size.width, bottom: 0, right: 15)
+        //bottom separator removal
+        if (indexPath.row == 1) {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: cell.frame.size.width, bottom: 0, right: 0)
         }
-        // $$$$$$$$$$$$$$$$$$$$$$$$$ VM $$$$$$$$$$$
-
+        
         return cell
         
     }
-   
     
-    @IBAction func taskSeeTapped(_ sender: Any) {
+    //objc function definations
     
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle : nil)
-        let viewController = storyBoard.instantiateViewController(withIdentifier: "TaskApprovalViewController") as! TaskApprovalViewController
+    @objc func showMoreTaskViewButton()  {
         
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.window!.rootViewController = viewController
+        let taskView = self.storyboard?.instantiateViewController(withIdentifier: "TaskApprovalViewController") as! TaskApprovalViewController
+        
+        taskView.segmentControlIndex = 0
+        
+        self.navigationController?.pushViewController(taskView, animated: true)
         
     }
     
-    @IBAction func approvalSeeTapped(_ sender: Any) {
-    
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle : nil)
-        let viewController = storyBoard.instantiateViewController(withIdentifier: "TaskApprovalViewController") as! TaskApprovalViewController
+    @objc func seeAllApprovalViewButton()  {
         
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.window!.rootViewController = viewController
-    
+        let approvalView = self.storyboard?.instantiateViewController(withIdentifier: "TaskApprovalViewController") as! TaskApprovalViewController
+        
+        approvalView.segmentControlIndex = 1
+        
+        self.navigationController?.pushViewController(approvalView, animated: true)
+        
     }
+    
+    
+    @objc func close() {
+        floatingBtnView.isHidden = true
+    }
+    
+    @objc func approval() {
+        floatingBtnView.isHidden = true
+        
+        seeAllApprovalViewButton()
+    }
+    
+    @objc func task() {
+        floatingBtnView.isHidden = true
+        
+        showMoreTaskViewButton()
+    }
+    
+    @objc func autoApproval() {
+        floatingBtnView.isHidden = true
+        
+        let autoApprovalView = self.storyboard?.instantiateViewController(withIdentifier: "AutoApprovalViewController") as! AutoApprovalViewController
+        
+        self.navigationController?.pushViewController(autoApprovalView, animated: true)
+    }
+    
+    @objc func status() {
+        floatingBtnView.isHidden = true
+        let statusView = self.storyboard?.instantiateViewController(withIdentifier: "StatusViewController") as! StatusViewController
+        
+        self.navigationController?.pushViewController(statusView, animated: true)
+    }
+    
+    //button definations
     
     @IBAction func homeTapped(_ sender: Any) {
         
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle : nil)
-        let viewController = storyBoard.instantiateViewController(withIdentifier: "DashboardViewController") as! DashboardViewController
-        
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.window!.rootViewController = viewController
+      self.storyboard?.instantiateViewController(withIdentifier: "DashboardViewController")
+        self.navigationController?.popViewController(animated: false)
         
     }
+    
+    
+    @IBAction func menuTapped(_ sender: Any) {
+    
+        floatingBtnView.isHidden = false
+        
+        }
+    
     
     @IBAction func searchTapped(_ sender: Any) {
+        
+        
     }
-    
-    @IBAction func approveTapped(_ sender: Any) {
-    }
-    
-    @IBAction func rejectTapped(_ sender: Any) {
-    }
+
     
     @IBAction func logoutTapped(_ sender: Any) {
+
+        utilities.logoutAlert()
+    }
+    
+    @IBAction func profileTapped(_ sender: Any) {
         
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle : nil)
-        let viewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        let profileView = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.window!.rootViewController = viewController
+        self.navigationController?.pushViewController(profileView, animated: true)
         
         
     }
+    
     
     @IBAction func notificationTapped(_ sender: Any) {
+        
+        let notificationView = self.storyboard?.instantiateViewController(withIdentifier: "NotificationViewController") as! NotificationViewController
+        
+        self.navigationController?.pushViewController(notificationView, animated: false)
+        
     }
     
-    
-    @objc func showMoreCollectionViewButton()  {
-         
-        let taskViewController = self.storyboard?.instantiateViewController(withIdentifier: "TaskApprovalViewController") as! TaskApprovalViewController
-        taskViewController.segmentControlIndex = 0
-        self.navigationController?.pushViewController(taskViewController, animated: true)
-    }
     
 }

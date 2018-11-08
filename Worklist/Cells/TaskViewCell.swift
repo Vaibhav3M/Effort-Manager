@@ -2,8 +2,8 @@
 //  TaskViewCell.swift
 //  Worklist
 //
-//  Created by Vaibhav Malhotra on 29/10/18.
-//  Copyright © 2018 Vaibhav Malhotra. All rights reserved.
+//  Created by Bimalesh Sahoo on 29/10/18.
+//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
 //
 
 import UIKit
@@ -19,6 +19,9 @@ class TaskViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

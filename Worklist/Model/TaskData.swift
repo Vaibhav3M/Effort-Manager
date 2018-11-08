@@ -2,8 +2,8 @@
 //  TaskData.swift
 //  Worklist
 //
-//  Created by Vaibhav Malhotra on 30/10/18.
-//  Copyright © 2018 Vaibhav Malhotra. All rights reserved.
+//  Created by Bimalesh Sahoo on 30/10/18.
+//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
 //
 
 import UIKit

@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  Worklist
 //
-//  Created by Vaibhav Malhotra on 26/10/18.
-//  Copyright © 2018 Vaibhav Malhotra. All rights reserved.
+//  Created by Bimalesh Sahoo on 26/10/18.
+//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
 //
 
 import UIKit

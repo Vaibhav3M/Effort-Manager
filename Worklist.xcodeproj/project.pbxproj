@@ -18,15 +18,23 @@
 		3445CE342189C396002F079A /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3445CE332189C396002F079A /* DashboardViewController.swift */; };
 		3445CE362189D4F2002F079A /* TaskCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3445CE352189D4F2002F079A /* TaskCollectionViewCell.swift */; };
 		3445CE3A218A2224002F079A /* ApprovalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3445CE39218A2224002F079A /* ApprovalCollectionViewCell.swift */; };
-		3445CE3C218AFEC3002F079A /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3445CE3B218AFEC3002F079A /* StatusViewController.swift */; };
 		3445CE3E218AFEDC002F079A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3445CE3D218AFEDC002F079A /* ProfileViewController.swift */; };
 		345C36CC2188E34D0032F9E1 /* ApprovalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345C36CB2188E34D0032F9E1 /* ApprovalData.swift */; };
 		345C36CF2188E9A30032F9E1 /* ApprovalViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345C36CE2188E9A30032F9E1 /* ApprovalViewCell.swift */; };
+		34869E85218F1D5F000E7359 /* AutoApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34869E84218F1D5F000E7359 /* AutoApprovalViewController.swift */; };
+		34869E87218F1D8B000E7359 /* AutoApprovalViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34869E86218F1D8B000E7359 /* AutoApprovalViewCell.swift */; };
+		34869E89218F23C5000E7359 /* AutoApprovalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34869E88218F23C5000E7359 /* AutoApprovalData.swift */; };
+		34869E8B218F23D6000E7359 /* StatusData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34869E8A218F23D6000E7359 /* StatusData.swift */; };
+		34869E8D218F23E9000E7359 /* NotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34869E8C218F23E9000E7359 /* NotificationData.swift */; };
+		34869E8F218F2FB9000E7359 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34869E8E218F2FB9000E7359 /* StatusViewController.swift */; };
+		34869E91218F2FCF000E7359 /* StatusViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34869E90218F2FCF000E7359 /* StatusViewCell.swift */; };
+		34869EB4218F92F7000E7359 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34869EB3218F92F7000E7359 /* CustomSegmentedControl.swift */; };
+		34869EB72190C30B000E7359 /* ClarificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34869EB62190C30B000E7359 /* ClarificationViewController.swift */; };
 		34A0FA4B218351B900DE172F /* TaskApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0FA4A218351B900DE172F /* TaskApprovalViewController.swift */; };
 		34A0FA6D2186E47C00DE172F /* TaskViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0FA6C2186E47C00DE172F /* TaskViewCell.swift */; };
 		34A0FA732188507600DE172F /* TaskData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0FA722188507600DE172F /* TaskData.swift */; };
-		34A0FA75218885EA00DE172F /* FloatingButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0FA74218885EA00DE172F /* FloatingButtonViewController.swift */; };
-		34FF3D3A2188A5480098AE10 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34FF3D382188A5480098AE10 /* Menu.storyboard */; };
+		34DBCB2B2191BEA600595946 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DBCB2A2191BEA600595946 /* NotificationViewController.swift */; };
+		34DBCB2D2191BEC000595946 /* NotificationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DBCB2C2191BEC000595946 /* NotificationViewCell.swift */; };
 		34FF3D3E2188B2F40098AE10 /* Filter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34FF3D3C2188B2F40098AE10 /* Filter.storyboard */; };
 		34FF3D442188B42F0098AE10 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FF3D432188B42F0098AE10 /* FilterViewController.swift */; };
 		34FF3D472188C03C0098AE10 /* utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FF3D462188C03C0098AE10 /* utilities.swift */; };
@@ -67,15 +75,23 @@
 		3445CE332189C396002F079A /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DashboardViewController.swift; path = Worklist/DashboardViewController.swift; sourceTree = SOURCE_ROOT; };
 		3445CE352189D4F2002F079A /* TaskCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCollectionViewCell.swift; sourceTree = "<group>"; };
 		3445CE39218A2224002F079A /* ApprovalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalCollectionViewCell.swift; sourceTree = "<group>"; };
-		3445CE3B218AFEC3002F079A /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		3445CE3D218AFEDC002F079A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		345C36CB2188E34D0032F9E1 /* ApprovalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalData.swift; sourceTree = "<group>"; };
 		345C36CE2188E9A30032F9E1 /* ApprovalViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalViewCell.swift; sourceTree = "<group>"; };
+		34869E84218F1D5F000E7359 /* AutoApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoApprovalViewController.swift; sourceTree = "<group>"; };
+		34869E86218F1D8B000E7359 /* AutoApprovalViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoApprovalViewCell.swift; sourceTree = "<group>"; };
+		34869E88218F23C5000E7359 /* AutoApprovalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoApprovalData.swift; sourceTree = "<group>"; };
+		34869E8A218F23D6000E7359 /* StatusData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusData.swift; sourceTree = "<group>"; };
+		34869E8C218F23E9000E7359 /* NotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationData.swift; sourceTree = "<group>"; };
+		34869E8E218F2FB9000E7359 /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
+		34869E90218F2FCF000E7359 /* StatusViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewCell.swift; sourceTree = "<group>"; };
+		34869EB3218F92F7000E7359 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		34869EB62190C30B000E7359 /* ClarificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClarificationViewController.swift; sourceTree = "<group>"; };
 		34A0FA4A218351B900DE172F /* TaskApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskApprovalViewController.swift; sourceTree = "<group>"; };
 		34A0FA6C2186E47C00DE172F /* TaskViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewCell.swift; sourceTree = "<group>"; };
 		34A0FA722188507600DE172F /* TaskData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskData.swift; sourceTree = "<group>"; };
-		34A0FA74218885EA00DE172F /* FloatingButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonViewController.swift; sourceTree = "<group>"; };
-		34FF3D392188A5480098AE10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Worklist/Base.lproj/Menu.storyboard; sourceTree = "<group>"; };
+		34DBCB2A2191BEA600595946 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		34DBCB2C2191BEC000595946 /* NotificationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewCell.swift; sourceTree = "<group>"; };
 		34FF3D3D2188B2F40098AE10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Worklist/Storyboards/Base.lproj/Filter.storyboard; sourceTree = "<group>"; };
 		34FF3D432188B42F0098AE10 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		34FF3D462188C03C0098AE10 /* utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utilities.swift; sourceTree = "<group>"; };
@@ -176,6 +192,9 @@
 			children = (
 				34A0FA722188507600DE172F /* TaskData.swift */,
 				345C36CB2188E34D0032F9E1 /* ApprovalData.swift */,
+				34869E88218F23C5000E7359 /* AutoApprovalData.swift */,
+				34869E8A218F23D6000E7359 /* StatusData.swift */,
+				34869E8C218F23E9000E7359 /* NotificationData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -184,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				34FF3D462188C03C0098AE10 /* utilities.swift */,
+				34869EB3218F92F7000E7359 /* CustomSegmentedControl.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -195,6 +215,9 @@
 				345C36CE2188E9A30032F9E1 /* ApprovalViewCell.swift */,
 				3445CE352189D4F2002F079A /* TaskCollectionViewCell.swift */,
 				3445CE39218A2224002F079A /* ApprovalCollectionViewCell.swift */,
+				34869E86218F1D8B000E7359 /* AutoApprovalViewCell.swift */,
+				34869E90218F2FCF000E7359 /* StatusViewCell.swift */,
+				34DBCB2C2191BEC000595946 /* NotificationViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -202,10 +225,12 @@
 		345C36D02188E9D40032F9E1 /* Custom View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				34A0FA74218885EA00DE172F /* FloatingButtonViewController.swift */,
 				34FF3D432188B42F0098AE10 /* FilterViewController.swift */,
-				3445CE3B218AFEC3002F079A /* StatusViewController.swift */,
 				3445CE3D218AFEDC002F079A /* ProfileViewController.swift */,
+				34869E84218F1D5F000E7359 /* AutoApprovalViewController.swift */,
+				34869E8E218F2FB9000E7359 /* StatusViewController.swift */,
+				34DBCB2A2191BEA600595946 /* NotificationViewController.swift */,
+				34869EB62190C30B000E7359 /* ClarificationViewController.swift */,
 			);
 			path = "Custom View Controllers";
 			sourceTree = "<group>";
@@ -214,7 +239,6 @@
 			isa = PBXGroup;
 			children = (
 				343FBE7F2182F9EB004696A1 /* Main.storyboard */,
-				34FF3D382188A5480098AE10 /* Menu.storyboard */,
 				34FF3D3C2188B2F40098AE10 /* Filter.storyboard */,
 				343FBE872182F9F1004696A1 /* LaunchScreen.storyboard */,
 			);
@@ -329,7 +353,6 @@
 				343FBE862182F9F1004696A1 /* Assets.xcassets in Resources */,
 				34FF3D3E2188B2F40098AE10 /* Filter.storyboard in Resources */,
 				343FBE812182F9EB004696A1 /* Main.storyboard in Resources */,
-				34FF3D3A2188A5480098AE10 /* Menu.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,22 +377,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34DBCB2D2191BEC000595946 /* NotificationViewCell.swift in Sources */,
 				34FF3D472188C03C0098AE10 /* utilities.swift in Sources */,
 				34A0FA4B218351B900DE172F /* TaskApprovalViewController.swift in Sources */,
+				34869E87218F1D8B000E7359 /* AutoApprovalViewCell.swift in Sources */,
 				34A0FA732188507600DE172F /* TaskData.swift in Sources */,
+				34869EB72190C30B000E7359 /* ClarificationViewController.swift in Sources */,
 				34FF3D442188B42F0098AE10 /* FilterViewController.swift in Sources */,
-				3445CE3C218AFEC3002F079A /* StatusViewController.swift in Sources */,
-				34A0FA75218885EA00DE172F /* FloatingButtonViewController.swift in Sources */,
 				3445CE3E218AFEDC002F079A /* ProfileViewController.swift in Sources */,
 				3445CE362189D4F2002F079A /* TaskCollectionViewCell.swift in Sources */,
+				34869E89218F23C5000E7359 /* AutoApprovalData.swift in Sources */,
+				34DBCB2B2191BEA600595946 /* NotificationViewController.swift in Sources */,
 				343FBEAD2183204C004696A1 /* LoginViewController.swift in Sources */,
 				345C36CC2188E34D0032F9E1 /* ApprovalData.swift in Sources */,
 				3445CE342189C396002F079A /* DashboardViewController.swift in Sources */,
 				34A0FA6D2186E47C00DE172F /* TaskViewCell.swift in Sources */,
+				34869E8D218F23E9000E7359 /* NotificationData.swift in Sources */,
 				343FBE7C2182F9EB004696A1 /* AppDelegate.swift in Sources */,
 				345C36CF2188E9A30032F9E1 /* ApprovalViewCell.swift in Sources */,
 				3445CE3A218A2224002F079A /* ApprovalCollectionViewCell.swift in Sources */,
+				34869E85218F1D5F000E7359 /* AutoApprovalViewController.swift in Sources */,
+				34869E8B218F23D6000E7359 /* StatusData.swift in Sources */,
 				343FBE842182F9EB004696A1 /* Worklist.xcdatamodeld in Sources */,
+				34869E8F218F2FB9000E7359 /* StatusViewController.swift in Sources */,
+				34869E91218F2FCF000E7359 /* StatusViewCell.swift in Sources */,
+				34869EB4218F92F7000E7359 /* CustomSegmentedControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,14 +451,6 @@
 				343FBE882182F9F1004696A1 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		34FF3D382188A5480098AE10 /* Menu.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				34FF3D392188A5480098AE10 /* Base */,
-			);
-			name = Menu.storyboard;
 			sourceTree = "<group>";
 		};
 		34FF3D3C2188B2F40098AE10 /* Filter.storyboard */ = {

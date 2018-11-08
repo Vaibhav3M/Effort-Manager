@@ -1,20 +1,19 @@
 //
-//  ApprovalData.swift
+//  AutoApprovalData.swift
 //  Worklist
 //
-//  Created by Bimalesh Sahoo on 31/10/18.
+//  Created by Bimalesh Sahoo on 04/11/18.
 //  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
 //
 
+
 import UIKit
 
-class ApprovalData : NSObject {
+class AutoApprovalData : NSObject {
     
-    var employeeName = String()
     var approvalType = String()
     var profileImage = UIImage()
     var approvalDescription = String()
-    var approvalDueDate =  String()
-    var priorityImage = UIImage()
+    var autoApprovalDate =  String()
     
 }
