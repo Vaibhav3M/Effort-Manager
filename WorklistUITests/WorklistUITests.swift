@@ -2,8 +2,8 @@
 //  WorklistUITests.swift
 //  WorklistUITests
 //
-//  Created by Vaibhav Malhotra on 26/10/18.
-//  Copyright © 2018 Vaibhav Malhotra. All rights reserved.
+//  Created by Vaibhav M on 26/10/18.
+//  Copyright © 2018 Vaibhav M. All rights reserved.
 //
 
 import XCTest

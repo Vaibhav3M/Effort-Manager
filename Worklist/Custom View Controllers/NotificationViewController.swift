@@ -2,8 +2,8 @@
 //  NotificationViewController.swift
 //  Worklist
 //
-//  Created by Bimalesh Sahoo on 06/11/18.
-//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
+//  Created by Vaibhav M on 06/11/18.
+//  Copyright © 2018 Vaibhav M. All rights reserved.
 //
 
 import UIKit
@@ -27,7 +27,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
 
         notificationData()
         
-        //floating btn actions
+      //MARK: floating btn actions
         btnFloatClose.addTarget(self, action: #selector(close), for: .touchUpInside)
         btnFloatApproval.addTarget(self, action: #selector(approval), for: .touchUpInside)
         btnFloatTask.addTarget(self, action: #selector(task), for: .touchUpInside)
@@ -36,7 +36,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         
 }
     
-// Tableview functions Datasource and Delegates
+//MARK:  Tableview functions Datasource and Delegates
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notificationDataList.count
@@ -67,11 +67,6 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     
     func notificationData() {
         
-        var notificationType : [String] = ["Clarification Request", "Attendance Edit", "Expense Claims", "Goals and Objectives", "Clarification Request", "Attendance Edit", "Expense Claims", "Goals and Objectives"]
-        var notificationDescription : [String] = ["Lorem ipsum dolor sit amet, consectetur", "Lorem ipsum dolor sit amet, consectetur", "Lorem ipsum dolor sit amet, consectetur", "Lorem ipsum dolor sit amet, consectetur", "Lorem ipsum dolor sit amet, consectetur", "Lorem ipsum dolor sit amet, consectetur", "Lorem ipsum dolor sit amet, consectetur", "Lorem ipsum dolor sit amet, consectetur"]
-        var notificationDate : [String] = ["Today", "Today", "Today", "05-11-2018", "01-11-2018", "31-10-2018", "25-10-2018", "15-10-2018"]
-        var profileImage : [UIImage] = [UIImage(named: "profile1")!, UIImage(named: "profile2")!, UIImage(named: "profile3")!, UIImage(named: "profile2")!, UIImage(named: "profile1")!, UIImage(named: "profile3")!, UIImage(named: "profile1")!, UIImage(named: "profile2")!]
-        
         for i in 0...7 {
             
             let notificationData = NotificationData()
@@ -79,7 +74,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             notificationData.notificationType = notificationType[i]
             notificationData.notificationDescription = notificationDescription[i]
             notificationData.notificationDate = notificationDate[i]
-            notificationData.profileImage = profileImage[i]
+            notificationData.profileImage = notificationImage[i]
             
             notificationDataList.append(notificationData)
             
@@ -87,10 +82,10 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-    //clear all button function
+    //MARK: clear all button function
     
     func clearAll() {
-        utilities.displayAlert(title: "Alert!", message: "All Notifications cleared.")
+        utilities.displayAlert(title: alert, message: allClear)
         
         //add clear action here ----------- ///////
         
@@ -98,7 +93,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
-    // left swipe to clear row action
+   //MARK:  left swipe to clear row action
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let clear = UIContextualAction.init(style: .normal, title: "Clear") { (action, view, nil) in
@@ -107,7 +102,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             
         }
         
-        clear.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+        clear.backgroundColor = customRed
         clear.image = #imageLiteral(resourceName: "reject-icon-s")
         
         let config = UISwipeActionsConfiguration(actions: [clear])
@@ -116,7 +111,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         return config
     }
     
-    //objc function definations
+   //MARK: objc function definations
     
     @objc func showMoreTaskViewButton()  {
         
@@ -166,14 +161,14 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     @objc func status() {
         floatingBtnView.isHidden = true
         
-        let statusView = self.storyboard?.instantiateViewController(withIdentifier: "NotificationViewController") as! NotificationViewController
+        let statusView = self.storyboard?.instantiateViewController(withIdentifier: "StatusViewController") as! StatusViewController
         
             self.navigationController?.pushViewController(statusView, animated: true)
 
     }
     
     
-    //Button Actions
+   //MARK: Button Actions
     
     @IBAction func profileTapped(_ sender: Any) {
         let profileView = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
@@ -187,7 +182,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func logoutTapped(_ sender: Any) {
-     utilities.logoutAlert()
+        utilities.logoutAlert(controller: self)
     }
     
     @IBAction func clearAllTapped(_ sender: Any) {
@@ -216,6 +211,9 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func searchTapped(_ sender: Any) {
+        let notificationView = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        
+        self.navigationController?.pushViewController(notificationView, animated: false)
     }
     
 }

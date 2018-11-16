@@ -2,8 +2,8 @@
 //  DashboardViewController.swift
 //  Worklist
 //
-//  Created by Bimalesh Sahoo on 31/10/18.
-//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
+//  Created by Vaibhav M on 31/10/18.
+//  Copyright © 2018 Vaibhav M. All rights reserved.
 //
 
 import UIKit
@@ -20,8 +20,12 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var btnFloatClose: UIButton!
     @IBOutlet weak var floatingBtnView: UIView!
     
+    @IBOutlet weak var viewFloatingButtonCover: UIView!
+    
+    @IBOutlet weak var viewFloatingButtonCoverTop: UIView!
     @IBOutlet weak var dashboardView: UIView!
     @IBOutlet weak var taskHeaderView: UIView!
+    @IBOutlet weak var approvalHeaderView: UIView!
     
     @IBOutlet weak var approvalView: UIView!
     
@@ -44,28 +48,30 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
         self.navigationController?.navigationBar.isHidden = true
         taskData()
         approvalData()
+        taskTap()
+        approvalTap()
         
         btnApprovalCount.setTitle(String(approvalDataList.count), for: .normal)
         
-        //tableView Corner radius
+       //MARK: tableView Corner radius
         self.approvalTableView.layer.cornerRadius = 10
         self.approvalTableView.layer.masksToBounds = true
         
         btnApprovalCount.layer.cornerRadius = btnApprovalCount.frame.width / 2
         btnApprovalCount.layer.masksToBounds = true
         
-        // button actions
+        //MARK:  button actions
         btnApprovalCount.addTarget(self, action: #selector(seeAllApprovalViewButton), for: .touchUpInside)
         btnSeeAllApproval.addTarget(self, action: #selector(seeAllApprovalViewButton), for: .touchUpInside)
         
-        //floating btn actions
+        //MARK: floating btn actions
         btnFloatClose.addTarget(self, action: #selector(close), for: .touchUpInside)
         btnFloatApproval.addTarget(self, action: #selector(approval), for: .touchUpInside)
         btnFloatTask.addTarget(self, action: #selector(task), for: .touchUpInside)
         btnFloatStatus.addTarget(self, action: #selector(status), for: .touchUpInside)
         btnAutoApproval.addTarget(self, action: #selector(autoApproval), for: .touchUpInside)
         
-        //tableview border styling
+        //MARK: tableview border styling
         tableBg.layer.cornerRadius = 10
         tableBg.layer.masksToBounds = true
         
@@ -81,25 +87,17 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
     
     
     
-    // task collection view functions
+    //MARK:  task collection view functions
     func taskData() {
-        
-        var taskType : [String] = ["My Time", "My Goal", "My Career", "My Time"]
-        var description : [String] = ["Update Efforts", "Fill G&O", "Update Profile", "Update Efforts"]
-        var priority : [UIImage] = [
-            UIImage(named: "medium-icon")!,
-            UIImage(named: "high")!, UIImage(named: "medium-icon")!, UIImage(named: "medium-icon")!]
-        var dueDate : [String] = ["Due on 23 June 18", "Due on 20 June 18", "Due on 18 June 18", "Due on 23 June 18"]
-        
         
         for i in 0...3 {
             
             let taskData = TaskData()
             
             taskData.dataTaskType = taskType[i]
-            taskData.dataDetail = description[i]
-            taskData.dataPriority = priority[i]
-            taskData.dataDueDate = dueDate[i]
+            taskData.dataDetail = taskDescription[i]
+            taskData.dataPriority = taskPriority[i]
+            taskData.dataDueDate = taskDueDate[i]
             
             taskDataList.append(taskData)
             
@@ -181,7 +179,7 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     
     
-    //collectionView custom height
+    //MARK: collectionView custom height
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
        
@@ -190,24 +188,18 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     
 
-    //approval tableView functions below
+    //MARK: approval tableView functions below
     
     func approvalData() {
         
-        var type : [String] = ["My Time", "My Financial", "My Time"]
-        var image : [UIImage] = [UIImage(named: "profile1")!,UIImage(named: "profile2")!, UIImage(named: "profile1")!]
-        var dueDate : [String] = ["Will be auto approved on 8:30 PM 23 June 2018","Due on 23 June 18", "Will be auto approved on 8:30 PM 23 June 2018"]
-        var description : [String] = ["Annual Leave", "Declaration", "Annual Leave"]
-        var priority : [UIImage] = [UIImage(named: "medium-icon")!,UIImage(named: "high")!, UIImage(named: "medium-icon")!]
-        
-        for i in 0...2 {
+        for i in 0...5 {
         
         let approvalData = ApprovalData()
         
-        approvalData.approvalType = type[i] + " - " + description[i]
+        approvalData.approvalType = approvalType[i] + " - " + approvalDescription[i]
         approvalData.profileImage = image[i]
-        approvalData.approvalDueDate = dueDate[i]
-        approvalData.priorityImage = priority[i]
+        approvalData.approvalDueDate = approvalDueDate[i]
+        approvalData.priorityImage = approvalPriority[i]
             
         approvalDataList.append(approvalData)
             
@@ -245,7 +237,25 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
         
     }
     
-    //objc function definations
+    func approvalTap() {
+        let approvalTap = UITapGestureRecognizer(target: self, action: #selector(approvalTapped))
+        approvalHeaderView.addGestureRecognizer(approvalTap)
+    }
+    
+    @objc func approvalTapped(sender: UITapGestureRecognizer) {
+        seeAllApprovalViewButton()
+    }
+    
+    func taskTap() {
+        let taskTap = UITapGestureRecognizer(target: self, action: #selector(taskTapped))
+        taskHeaderView.addGestureRecognizer(taskTap)
+    }
+    
+    @objc func taskTapped(sender: UITapGestureRecognizer) {
+        showMoreTaskViewButton()
+    }
+    
+    //MARK: objc function definations
     
     @objc func showMoreTaskViewButton()  {
         
@@ -270,22 +280,36 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
     
     @objc func close() {
         floatingBtnView.isHidden = true
+        viewFloatingButtonCover.isHidden = true
+        viewFloatingButtonCoverTop.isHidden = true
+        
     }
     
     @objc func approval() {
         floatingBtnView.isHidden = true
+        viewFloatingButtonCover.isHidden = true
+        viewFloatingButtonCoverTop.isHidden = true
+
         
         seeAllApprovalViewButton()
     }
     
     @objc func task() {
         floatingBtnView.isHidden = true
+        viewFloatingButtonCover.isHidden = true
+        viewFloatingButtonCoverTop.isHidden = true
+
+
         
         showMoreTaskViewButton()
     }
     
     @objc func autoApproval() {
         floatingBtnView.isHidden = true
+        viewFloatingButtonCover.isHidden = true
+        viewFloatingButtonCoverTop.isHidden = true
+
+
         
         let autoApprovalView = self.storyboard?.instantiateViewController(withIdentifier: "AutoApprovalViewController") as! AutoApprovalViewController
         
@@ -294,12 +318,16 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
     
     @objc func status() {
         floatingBtnView.isHidden = true
+        viewFloatingButtonCover.isHidden = true
+        viewFloatingButtonCoverTop.isHidden = true
+
+
         let statusView = self.storyboard?.instantiateViewController(withIdentifier: "StatusViewController") as! StatusViewController
         
         self.navigationController?.pushViewController(statusView, animated: true)
     }
     
-    //button definations
+    //MARK: button definations
     
     @IBAction func homeTapped(_ sender: Any) {
         
@@ -312,19 +340,25 @@ class DashboardViewController: UIViewController, UICollectionViewDelegate, UICol
     @IBAction func menuTapped(_ sender: Any) {
     
         floatingBtnView.isHidden = false
+        viewFloatingButtonCover.isHidden = false
+        viewFloatingButtonCoverTop.isHidden = false
+
         
         }
     
     
     @IBAction func searchTapped(_ sender: Any) {
         
+        let notificationView = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        
+        self.navigationController?.pushViewController(notificationView, animated: false)
         
     }
 
     
     @IBAction func logoutTapped(_ sender: Any) {
 
-        utilities.logoutAlert()
+        utilities.logoutAlert(controller: self)
     }
     
     @IBAction func profileTapped(_ sender: Any) {

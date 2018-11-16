@@ -2,15 +2,17 @@
 //  AutoApprovalViewController.swift
 //  Worklist
 //
-//  Created by Bimalesh Sahoo on 04/11/18.
-//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
+//  Created by Vaibhav M on 04/11/18.
+//  Copyright © 2018 Vaibhav M. All rights reserved.
 //
 
 import UIKit
 
 class AutoApprovalViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-
+    @IBOutlet weak var btnClearAll: UIButton!
+    @IBOutlet weak var btnClearAllIcon: UIButton!
+    
     @IBOutlet weak var autoApprovalTableView: UITableView!
     
     @IBOutlet weak var lblApprovalCount: UILabel!
@@ -33,16 +35,20 @@ class AutoApprovalViewController: UIViewController, UITableViewDelegate, UITable
         lblApprovalCount.layer.cornerRadius = lblApprovalCount.frame.width / 2
         lblApprovalCount.layer.masksToBounds = true
         
-        //floating btn actions
+      //MARK: floating btn actions
         btnFloatClose.addTarget(self, action: #selector(close), for: .touchUpInside)
         btnFloatApproval.addTarget(self, action: #selector(approval), for: .touchUpInside)
         btnFloatTask.addTarget(self, action: #selector(task), for: .touchUpInside)
         btnFloatStatus.addTarget(self, action: #selector(status), for: .touchUpInside)
         btnAutoApproval.addTarget(self, action: #selector(autoApproval), for: .touchUpInside)
+        
+        btnClearAll.addTarget(self, action: #selector(clearAll), for: .touchUpInside)
+        btnClearAllIcon.addTarget(self, action: #selector(clearAll), for: .touchUpInside)
+        
     }
     
     
-    // tableview functions delegate & datasource
+    //MARK:  tableview functions delegate & datasource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return autoApprovalDataList.count
@@ -65,7 +71,7 @@ class AutoApprovalViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
-    //left swipe to clear Row Action
+    //MARK: left swipe to clear Row Action
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     
@@ -75,7 +81,7 @@ class AutoApprovalViewController: UIViewController, UITableViewDelegate, UITable
             
         }
 
-        clear.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+        clear.backgroundColor = customRed
         clear.image = #imageLiteral(resourceName: "reject-icon-s")
         
         let config = UISwipeActionsConfiguration(actions: [clear])
@@ -84,23 +90,16 @@ class AutoApprovalViewController: UIViewController, UITableViewDelegate, UITable
         return config
     }
     
-    //auto_approval data
+    //MARK: auto_approval data
     func autoApprovalData() {
         
-        var approvalType : [String] = ["My Time", "My Learning", "My Career", "My Time","My Time", "My Goal", "My Career", "My Time"]
-        var description : [String] = ["OOD", "Additional Skill Mapping", "Update Profile", "Update Efforts","Update Efforts", "Fill G&O", "Update Profile", "Update Efforts"]
-        
-        var profileImage : [UIImage] = [UIImage(named: "profile1")!,UIImage(named: "profile2")!, UIImage(named: "profile3")!,UIImage(named: "profile2")!, UIImage(named: "profile1")!,UIImage(named: "profile3")!, UIImage(named: "profile1")!,UIImage(named: "profile2")!]
-        
-        var autoApprovalDate : [String] = ["Today", "Today", "Today", "Today", "21-11-2018", "22-11-2018", "24-11-2018", "30-11-2018"]
-        
-        for i in 0...7 {
+        for i in 0...5 {
             
             let autoApprovalData = AutoApprovalData()
             
             autoApprovalData.approvalType = approvalType[i]
-            autoApprovalData.approvalDescription = description[i]
-            autoApprovalData.profileImage = profileImage[i]
+            autoApprovalData.approvalDescription = approvalDescription[i]
+            autoApprovalData.profileImage = image[i]
             autoApprovalData.autoApprovalDate = autoApprovalDate[i]
             
             autoApprovalDataList.append(autoApprovalData)
@@ -109,7 +108,7 @@ class AutoApprovalViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-    //objc function definations
+   //MARK: objc function definations
     
     @objc func showMoreTaskViewButton()  {
         
@@ -131,7 +130,12 @@ class AutoApprovalViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-    // floating button functions
+    @objc func clearAll() {
+        utilities.displayAlert(title: blank, message: allClear)
+        autoApprovalTableView.reloadData()
+    }
+    
+    //MARK:  floating button functions
     @objc func close() {
         floatingBtnView.isHidden = true
     }
@@ -161,7 +165,7 @@ class AutoApprovalViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
-    // action buttons
+    //MARK:  action buttons
     
     @IBAction func profileTapped(_ sender: Any) {
         let profileView = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
@@ -178,7 +182,7 @@ class AutoApprovalViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func logoutTapped(_ sender: Any) {
-        utilities.logoutAlert()
+        utilities.logoutAlert(controller: self)
 
     }
     
@@ -199,6 +203,9 @@ class AutoApprovalViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func searchTapped(_ sender: Any) {
+        let notificationView = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        
+        self.navigationController?.pushViewController(notificationView, animated: false)
     }
     
     

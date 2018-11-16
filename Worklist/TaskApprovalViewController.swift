@@ -2,8 +2,8 @@
 //  TaskApprovalViewController.swift
 //  Worklist
 //
-//  Created by Bimalesh Sahoo on 26/10/18.
-//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
+//  Created by Vaibhav M on 26/10/18.
+//  Copyright © 2018 Vaibhav M. All rights reserved.
 //
 
 import UIKit
@@ -23,6 +23,8 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBOutlet weak var taskApprovalToggle: CustomSegmentedControl!
     @IBOutlet weak var singleBulkToggle: CustomSegmentedControl!
+    var singleBool = true
+    
     
     @IBOutlet weak var btnAutoApproval: UIButton!
     @IBOutlet weak var btnFloatStatus: UIButton!
@@ -32,21 +34,23 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var floatingBtnView: UIView!
     
     
-    //for Task
+    //MARK: for Task
     var taskDataList = [TaskData]()
     
     let taskCellIdentifier = "task"
     
-    //for Approval
+    //MARK: for Approval
     var approvalDataList = [ApprovalData]()
     
     let approvalCellIdentifier = "approval"
     
     var segmentControlIndex = 0
     
+    var cellExpanded: Bool = false
+    var expandedCellIndex: Int!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         getTaskData()
         getApprovalData()
         lblApprovalCount.text = String(approvalDataList.count)
@@ -66,8 +70,7 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
         btnFloatStatus.addTarget(self, action: #selector(status), for: .touchUpInside)
         btnAutoApproval.addTarget(self, action: #selector(autoApproval), for: .touchUpInside)
         
-//        taskApprovalToggle.selectedSegmentIndex = segmentControlIndex
-        
+        self.expandedCellIndex = -1
         taskApprovalSegment()
     }
     
@@ -82,48 +85,38 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
-    //approval data call
+  //MARK: approval data call
     func getApprovalData() {
-        
-        var name : [String] = ["Rimmy Will", "John Will", "Mohan","Rimmy Will", "John Will", "Mohan"]
-        var type : [String] = ["My Time", "My Leave","Declaration", "My Time", "My Leave","Declaration"]
-        var image : [UIImage] = [UIImage(named: "profile1")!,UIImage(named: "profile2")!,UIImage(named: "profile3")!,UIImage(named: "profile1")!,UIImage(named: "profile2")!,UIImage(named: "profile3")!]
-        var description : [String] = ["Lorem ipsum dolor sit amet, consectetaur","Lorem ipsum dolor sit amet, consectetaur","Lorem ipsum dolor sit amet, consectetaur","Lorem ipsum dolor sit amet, consectetaur","Lorem ipsum dolor sit amet, consectetaur","Lorem ipsum dolor sit amet, consectetaur"]
         
         for i in 0...5
         {
             let approvalData = ApprovalData()
-            approvalData.approvalType = name[i] + " - " + type[i]
+            
+            approvalData.approvalType = name[i] + " - " + approvalType[i]
             approvalData.profileImage = image[i]
-            approvalData.approvalDescription = description[i]
+            approvalData.approvalDescription = approvalDescription[i]
             
             approvalDataList.append(approvalData)
         }
     }
     
-    //task data call
+   //MARK: task data call
     func getTaskData() {
         
-        var taskType : [String] = ["My Time", "My Goal", "My Career"]
-        var detail : [String] = ["Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do", "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do", "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do"]
-        var priority : [UIImage] = [
-            UIImage(named: "medium-icon")!,
-            UIImage(named: "high")!,
-            UIImage(named: "medium-icon")! ]
-        var dueDate : [String] = ["Due on 8:30 PM 23 June 2018", "Due on 8:30 PM 23 June 2018", "Due on 8:30 PM 23 June 2018"]
-        for i in 0...2
+        for i in 0...3
         {
             let taskData = TaskData()
-            taskData.dataTaskType = taskType[i]
-            taskData.dataDetail = detail[i]
-            taskData.dataPriority = priority[i]
-            taskData.dataDueDate = dueDate[i]
             
+            taskData.dataTaskType = taskType[i]
+            taskData.dataDetail = taskDetail[i]
+            taskData.dataPriority = taskPriority[i]
+            taskData.dataDueDate = taskDueDate[i]
+
             taskDataList.append(taskData)
         }
     }
     
-    //tableview configurations
+   //MARK: tableview configurations
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -172,8 +165,45 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
             cell.approvalCell.text = data.approvalType
             cell.descriptionCell.text = data.approvalDescription
             cell.imageCell.image = data.profileImage
+
+
+            cell.btnChat.isHidden = true
+            cell.btnReject.isHidden = true
+            cell.btnApprove.isHidden = true
             
+            cell.btnChat.addTarget(self, action: #selector(clarify), for: .touchUpInside)
+
+
             
+            if (cell.approvalCell.text?.contains("My Time"))! {
+                
+                cell.attendanceData.isHidden = false
+                cell.tofa.isHidden = false
+                cell.approvalDuration_Claims.text = "08.05 hrs"
+                cell.inOut_leaveTime_claimType.text = "22 June: In Time 09.22 AM - Out Time 04.45 PM"
+                cell.attendanceData.text = "Attendance: 09.50 hrs"
+                cell.efforts_leaveRemaining_claimReason.text = "Efforts: 7 hrs"
+                cell.tofa.text = "TOFA: 4 hrs"
+                
+            } else if (cell.approvalCell.text?.contains("My Leave"))! {
+                
+                cell.approvalDuration_Claims.text = "08 Days"
+                cell.inOut_leaveTime_claimType.text = "01 Nov 2018 - 10 Nov 2018"
+                cell.efforts_leaveRemaining_claimReason.text = "10 Annual Leaves Remaining"
+                
+            } else if (cell.approvalCell.text?.contains("Expense Claims"))! {
+                
+                cell.approvalDuration_Claims.text = "Rs. 1058"
+                cell.inOut_leaveTime_claimType.text = "Conveyance: 758, Food: 300"
+                cell.efforts_leaveRemaining_claimReason.text = "Reason: Late Night Expenses"
+
+            }
+                if self.expandedCellIndex == indexPath.row && singleBool
+                {
+                    cell.btnChat.isHidden = !cellExpanded
+                    cell.btnReject.isHidden = !cellExpanded
+                    cell.btnApprove.isHidden = !cellExpanded
+                }
             return cell
         }
         
@@ -189,7 +219,7 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
         
         let cell = tableView.cellForRow(at: indexPath) as! ApprovalViewCell
         
-        cell.imageCell.image = UIImage(named: "approved-button")
+        cell.imageCell.image = UIImage(named: "checked")
         
         btnBulkApproval.isUserInteractionEnabled = true
         btnBulkReject.isUserInteractionEnabled = true
@@ -197,14 +227,29 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
         btnBulkApproval.addTarget(self, action: #selector(bulkApproval), for: .touchUpInside)
         btnBulkReject.addTarget(self, action: #selector(bulkReject), for: .touchUpInside)
         
+            } else {
+                
+                self.expandedCellIndex = indexPath.row
+                
+                    if cellExpanded {
+                        cellExpanded = false
+                        self.expandedCellIndex = -1
+                    } else {
+                        cellExpanded = true
+                        self.expandedCellIndex = indexPath.row
+                    }
+                    approvalTableView.reloadData()
+                    approvalTableView.beginUpdates()
+                    approvalTableView.endUpdates()
+                
             }
+            
         }
+       // tableView.deselectRow(at: indexPath, animated: true)
         
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-      
-        if tableView == approvalTableView {
             
             if singleBulkToggle.selectedSegmentIndex == 1 {
                 
@@ -219,12 +264,36 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
           }
             btnBulkApproval.isUserInteractionEnabled = false
             btnBulkReject.isUserInteractionEnabled = false
-            
-        }
+        
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+    if tableView == approvalTableView {
+                
+    if singleBulkToggle.selectedSegmentIndex == 0 {
+        
     
-    //right swipe to approve
+        if self.expandedCellIndex >= 0
+        {
+            if self.expandedCellIndex == indexPath.row
+            {
+                return 230
+            } else {
+                return 70
+                
+                   }
+            
+            }
+        }
+            return 70
+        }
+        return 150
+    }
+
+    
+    
+   //MARK: right swipe to approve
     
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -242,7 +311,7 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
 
             
             approve.image = UIImage(named: "approved-icon-s")
-            approve.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            approve.backgroundColor = customGreen
             
             let config = UISwipeActionsConfiguration(actions: [approve])
             config.performsFirstActionWithFullSwipe = false
@@ -258,7 +327,7 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
 
     }
     
-    //left swipe to reject and clarify
+   //MARK: left swipe to reject and clarify
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
@@ -274,7 +343,7 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
             }
             reject.image = UIImage(named: "reject-icon-s")
             
-            let clarification = UIContextualAction.init(style: .normal, title: "?") { (action, view, nil) in
+            let clarification = UIContextualAction.init(style: .normal, title: nil) { (action, view, nil) in
             
             let clarificationView = self.storyboard?.instantiateViewController(withIdentifier: "ClarificationViewController") as! ClarificationViewController
                 
@@ -282,7 +351,8 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
 
             }
             
-            clarification.backgroundColor = #colorLiteral(red: 0, green: 0.6352941176, blue: 0.8784313725, alpha: 1)
+            clarification.image = UIImage(named: "chat")
+            clarification.backgroundColor = customBlue
             
             let config =  UISwipeActionsConfiguration(actions: [reject, clarification])
             config.performsFirstActionWithFullSwipe = false
@@ -290,13 +360,25 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
             return config
             }
 
-    }
+        }
         return UISwipeActionsConfiguration()
 
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+   
+        if tableView == approvalTableView {
+        
+        if cellExpanded == true {
+            return false
+            }
+        return true
+        }
+        return false
+    }
     
-    //Task Approval Toggle Segment Configurations
+    //MARK: Task Approval Toggle Segment Configurations
+    
     func taskApprovalSegment() {
         
         switch taskApprovalToggle.selectedSegmentIndex {
@@ -323,40 +405,21 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
-    //Single Bulk Segment Configuration
-    func singleBulkSegment() {
+  //MARK: Single Bulk Segment Configuration
+    func singleBulkSegment(hidden: Bool) {
         
-        switch singleBulkToggle.selectedSegmentIndex {
-        case 0:
-            btnBulkReject.isHidden = true
-            btnBulkApproval.isHidden = true
-            lblApprovalCount.isHidden = false
-            lblTotalApproval.isHidden = false
+            btnBulkReject.isHidden = hidden
+            btnBulkApproval.isHidden = hidden
+            lblApprovalCount.isHidden = !hidden
+            lblTotalApproval.isHidden = !hidden
+        
             
-            self.approvalTableView.allowsMultipleSelection = false
+            self.approvalTableView.allowsMultipleSelection = !hidden
             approvalTableView.reloadData()
-            
-            
-        case 1:
-            btnBulkReject.isHidden = false
-            btnBulkApproval.isHidden = false
-            lblApprovalCount.isHidden = true
-            lblTotalApproval.isHidden = true
-            
-            btnBulkApproval.isUserInteractionEnabled = false
-            btnBulkReject.isUserInteractionEnabled = false
-
-            self.approvalTableView.allowsMultipleSelection = true
-            approvalTableView.reloadData()
-            
-            
-        default:
-            break
-        }
         
     }
     
-    //floating button defination
+  //MARK: floating button defination
     
     @objc func close() {
         floatingBtnView.isHidden = true
@@ -413,7 +476,12 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
         btnBulkReject.isUserInteractionEnabled = false
     }
     
-    //Segment Control Actions
+    @objc func clarify() {
+        let clarifyView = self.storyboard?.instantiateViewController(withIdentifier: "ClarificationViewController") as! ClarificationViewController
+        self.navigationController?.pushViewController(clarifyView, animated: true)
+    }
+    
+  //MARK: Segment Control Actions
    
     @IBAction func taskApprovalTapped(_ sender: CustomSegmentedControl) {
         
@@ -422,15 +490,26 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
     
     
     @IBAction func singleBulkTapped(_ sender: CustomSegmentedControl) {
-        singleBulkSegment()
+        
+        switch singleBulkToggle.selectedSegmentIndex {
+        case 0:
+            singleBulkSegment(hidden: true)
+            singleBool = true
+        case 1:
+            singleBulkSegment(hidden: false)
+            singleBool = false
+        default:
+            break
+        }
+        
     }
     
     
-    // Action Buttons
+ //MARK:  Action Buttons
     
     @IBAction func logoutTapped(_ sender: Any) {
     
-        utilities.logoutAlert()
+        utilities.logoutAlert(controller: self)
 
     }
     
@@ -462,5 +541,12 @@ class TaskApprovalViewController: UIViewController, UITableViewDelegate, UITable
         floatingBtnView.isHidden = false
         
     }
+    
+    @IBAction func searchTapped(_ sender: Any) {
+        let notificationView = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        
+        self.navigationController?.pushViewController(notificationView, animated: false)
+    }
+    
     
 }

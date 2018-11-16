@@ -2,8 +2,8 @@
 //  StatusViewController.swift
 //  Worklist
 //
-//  Created by Bimalesh Sahoo on 04/11/18.
-//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
+//  Created by Vaibhav M on 04/11/18.
+//  Copyright © 2018 Vaibhav M. All rights reserved.
 //
 
 import UIKit
@@ -31,7 +31,7 @@ class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDa
         lblStatusCount.layer.cornerRadius = lblStatusCount.frame.width / 2
         lblStatusCount.layer.masksToBounds = true
         
-	//floating btn actions
+	//MARK: floating btn actions
         btnFloatClose.addTarget(self, action: #selector(close), for: .touchUpInside)
         btnFloatApproval.addTarget(self, action: #selector(approval), for: .touchUpInside)
         btnFloatTask.addTarget(self, action: #selector(task), for: .touchUpInside)
@@ -40,7 +40,7 @@ class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	
     }
     
-    //table view functions
+    //MARK: table view functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return statusDataList.count
     }
@@ -57,22 +57,22 @@ class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.daysLeft.text = "Days Left: " + String(data.daysLeft)
         cell.escalation.text = data.escalationType
         
-        //priority color setting property
+       //MARK: priority color setting property using color literal
         if data.daysLeft == 0 {
-            cell.priorityIndicator.backgroundColor = #colorLiteral(red: 0.8941176471, green: 0.1921568627, blue: 0.2431372549, alpha: 1)
+            cell.priorityIndicator.backgroundColor = customRed
         } else if data.daysLeft < 5 && data.daysLeft > 0 {
-            cell.priorityIndicator.backgroundColor = #colorLiteral(red: 1, green: 0.6823529412, blue: 0, alpha: 1)
+            cell.priorityIndicator.backgroundColor = customYellow
         } else if data.daysLeft > 4 {
-            cell.priorityIndicator.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
+            cell.priorityIndicator.backgroundColor = customGrey
             cell.priorityIndicator.layer.borderWidth = 1.0
             cell.priorityIndicator.layer.borderColor = UIColor.lightGray.cgColor
         }
         
-        // yes and no colour property setting
+       //MARK:  yes and no colour property setting
         if cell.escalation.text == "Yes" {
-            cell.escalation.textColor = #colorLiteral(red: 0.1215686275, green: 0.7137254902, blue: 1, alpha: 1)
+            cell.escalation.textColor = customBlue
         } else if cell.escalation.text == "No" {
-            cell.escalation.textColor = #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+            cell.escalation.textColor = customDarkGrey
         }
         
         return cell
@@ -83,18 +83,18 @@ class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-    //swipe Row Actions
+   //MARK: swipe Row Actions
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let reminder = UIContextualAction.init(style: .normal, title: "Send Reminder") { (action, view, nil) in
             
             self.statusTableView.reloadData()
             
-            utilities.displayAlert(title: "Alert !", message: "Reminder Successfully Sent.")
+            utilities.displayAlert(title: alert, message: reminderSent)
         }
         
         reminder.image = UIImage(named: "reminder-icon")
-        reminder.backgroundColor = #colorLiteral(red: 0, green: 0.6352941176, blue: 0.8784313725, alpha: 1)
+        reminder.backgroundColor = customBlue
         
         let config = UISwipeActionsConfiguration(actions: [reminder])
         config.performsFirstActionWithFullSwipe = false
@@ -105,19 +105,12 @@ class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func statusData() {
         
-        var statusType : [String] = ["My Time", "My Learning", "My Career", "My Time","My Time", "My Goal", "My Career", "My Time"]
-        var escalation : [String] = ["Yes", "Yes", "No", "Yes", "No", "Yes", "No", "Yes"]
-        
-        var profileImage : [UIImage] = [UIImage(named: "profile1")!,UIImage(named: "profile2")!, UIImage(named: "profile3")!,UIImage(named: "profile2")!, UIImage(named: "profile1")!,UIImage(named: "profile3")!, UIImage(named: "profile1")!,UIImage(named: "profile2")!]
-        
-        var daysLeft : [Int] = [2, 0, 1, 2, 5, 7, 8, 2]
-        
         for i in 0...7 {
             
             let statusData = StatusData()
             
             statusData.statusType = statusType[i]
-            statusData.profileImage = profileImage[i]
+            statusData.profileImage = statusImage[i]
             statusData.daysLeft = daysLeft[i]
             statusData.escalationType = escalation[i]
             
@@ -127,7 +120,7 @@ class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
     }
     
-    //objc function definations
+    //MARK: objc function definations
     
     @objc func showMoreTaskViewButton()  {
         
@@ -179,6 +172,7 @@ class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    //MARK: Action Buttons
     @IBAction func profileTapped(_ sender: Any) {
         let profileView = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         
@@ -193,7 +187,7 @@ class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func logoutTapped(_ sender: Any) {
-        utilities.logoutAlert()
+        utilities.logoutAlert(controller: self)
 
     }
     
@@ -213,6 +207,9 @@ class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func searchTapped(_ sender: Any) {
+        let notificationView = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        
+        self.navigationController?.pushViewController(notificationView, animated: false)
     }
     
 }

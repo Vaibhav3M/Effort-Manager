@@ -2,14 +2,14 @@
 //  utilities.swift
 //  Worklist
 //
-//  Created by Bimalesh Sahoo on 30/10/18.
-//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
+//  Created by Vaibhav M on 30/10/18.
+//  Copyright © 2018 Vaibhav M. All rights reserved.
 //
 
 import UIKit
 
 class utilities {
-    //Alert without Action
+    //MARK: Alert without Action
         static func displayAlert(title: String, message: String) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -21,27 +21,9 @@ class utilities {
         }
         viewController.present(alertController, animated: true, completion: nil)
     }
-    //Alert with Action
-//    static func displaySuccessAlert(title: String, message: String,delegate: UIViewController) {
-//        guard let viewController = UIApplication.shared.keyWindow?.rootViewController else {
-//            fatalError("keyWindow has no rootViewController")
-//        }
-//        var visibleController = UIViewController()
-//        if let nav = viewController as? UINavigationController {
-//            visibleController = nav.visibleViewController!
-//        }
-//        else{
-//            visibleController = viewController
-//        }
-//        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
-//            action in
-//            visibleController.navigationController?.popViewController(animated: true)
-//        }))
-//        visibleController.present(alert, animated: true, completion: nil)
-//    }
-    //Alert for Logout
-    static func logoutAlert() {
+ 
+    //MARK: Alert for Logout
+    static func logoutAlert(controller: UIViewController) {
         guard let viewController = UIApplication.shared.keyWindow?.rootViewController else {
             fatalError("keyWindow has no rootViewController")
             
@@ -52,8 +34,12 @@ class utilities {
             
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let loginController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-            let appdelegate = UIApplication.shared.delegate as! AppDelegate
-            appdelegate.window!.rootViewController = loginController
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
+            controller.navigationController?.viewControllers.removeAll()
+    
+            appDelegate.window?.rootViewController = loginController
+            appDelegate.window?.makeKeyAndVisible()
             
         }))
         

@@ -2,8 +2,8 @@
 //  ProfileViewController.swift
 //  Worklist
 //
-//  Created by Bimalesh Sahoo on 01/11/18.
-//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
+//  Created by Vaibhav M on 01/11/18.
+//  Copyright © 2018 Vaibhav M. All rights reserved.
 //
 
 import UIKit
@@ -28,17 +28,12 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var btnFloatApproval: UIButton!
     @IBOutlet weak var btnFloatClose: UIButton!
     @IBOutlet weak var floatingBtnView: UIView!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //image mapping
-        imageProfile.image = UIImage(named: "profile1")
-        imageProfile.layer.cornerRadius = imageProfile.frame.width / 2
-        imageProfile.layer.masksToBounds = true
         
-        //profile name mapping
-        lblProfileName.text = "Laura Bohill"
+        profileName()
+        
         
         //designation practice mapping
         let designation : String = "Enterprise Architect"
@@ -55,7 +50,7 @@ class ProfileViewController: UIViewController {
         lblHRManager.text = "Bhagyashree Raj"
         
 
-        //floating btn actions
+     //MARK: floating btn actions
         btnFloatClose.addTarget(self, action: #selector(close), for: .touchUpInside)
         btnFloatApproval.addTarget(self, action: #selector(approval), for: .touchUpInside)
         btnFloatTask.addTarget(self, action: #selector(task), for: .touchUpInside)
@@ -65,55 +60,26 @@ class ProfileViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func btnProfileTapped(_ sender: Any) {
-       
-      
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        //image mapping
+        imageProfile.image = UIImage(named: "profile1")
+        imageProfile.layer.cornerRadius = imageProfile.frame.height / 2
+        imageProfile.layer.masksToBounds = true
     }
     
-    
-    @IBAction func btnNotificationTapped(_ sender: Any) {
+    //MARK: Fetch profile name from coreData
+    func profileName() {
         
-        let notificationView = self.storyboard?.instantiateViewController(withIdentifier: "NotificationViewController") as! NotificationViewController
-        
-        self.navigationController?.pushViewController(notificationView, animated: true)
-        
-        
-    }
-    
-    
-    @IBAction func logoutTapped(_ sender: Any) {
-        
-        utilities.logoutAlert()
-
-    }
-    
-    @IBAction func homeTapped(_ sender: Any) {
-        
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle : nil)
-        let viewController = storyBoard.instantiateViewController(withIdentifier: "DashboardViewController") as! DashboardViewController
-        
-        let navigationController = UINavigationController(rootViewController: viewController)
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.window!.rootViewController = navigationController
+        localDatabase.fetchProfileData(profileName: lblProfileName)
         
     }
     
-    @IBAction func menuTapped(_ sender: Any) {
-        
-        floatingBtnView.isHidden = false
-        
-    }
-    
-    @IBAction func btnSearchTapped(_ sender: Any) {
-    
-    
-    }
-    
-    
-    //objc function definations
+   //MARK: objc function definations
     
     @objc func showMoreTaskViewButton()  {
-         
+        
         let taskView = self.storyboard?.instantiateViewController(withIdentifier: "TaskApprovalViewController") as! TaskApprovalViewController
         
         taskView.segmentControlIndex = 0
@@ -139,7 +105,7 @@ class ProfileViewController: UIViewController {
     
     @objc func approval() {
         floatingBtnView.isHidden = true
-
+        
         seeAllApprovalViewButton()
     }
     
@@ -153,17 +119,65 @@ class ProfileViewController: UIViewController {
         floatingBtnView.isHidden = true
         
         let autoApprovalView = self.storyboard?.instantiateViewController(withIdentifier: "AutoApprovalViewController") as! AutoApprovalViewController
-       
+        
         self.navigationController?.pushViewController(autoApprovalView, animated: true)
-            }
+    }
     
     @objc func status() {
         floatingBtnView.isHidden = true
         
         
         let statusView = self.storyboard?.instantiateViewController(withIdentifier: "StatusViewController") as! StatusViewController
+        
+        self.navigationController?.pushViewController(statusView, animated: true)
+    }
+    
+  //MARK ->> Action Buttons
+    @IBAction func btnProfileTapped(_ sender: Any) {
+       
+      
+    }
+    
+    
+    @IBAction func btnNotificationTapped(_ sender: Any) {
+        
+        let notificationView = self.storyboard?.instantiateViewController(withIdentifier: "NotificationViewController") as! NotificationViewController
+        
+        self.navigationController?.pushViewController(notificationView, animated: true)
+        
+        
+    }
+    
+    
+    @IBAction func logoutTapped(_ sender: Any) {
+        
+        utilities.logoutAlert(controller: self)
 
-         self.navigationController?.pushViewController(statusView, animated: true)
+    }
+    
+    @IBAction func homeTapped(_ sender: Any) {
+        
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle : nil)
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "DashboardViewController") as! DashboardViewController
+        
+        let navigationController = UINavigationController(rootViewController: viewController)
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.window!.rootViewController = navigationController
+        
+    }
+    
+    @IBAction func menuTapped(_ sender: Any) {
+        
+        floatingBtnView.isHidden = false
+        
+    }
+    
+    @IBAction func btnSearchTapped(_ sender: Any) {
+    
+        let notificationView = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        
+        self.navigationController?.pushViewController(notificationView, animated: false)
+    
     }
 
 }

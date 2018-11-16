@@ -1,0 +1,16 @@
+PODS:
+  - SwiftRangeSlider (1.0.0)
+
+DEPENDENCIES:
+  - SwiftRangeSlider
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SwiftRangeSlider
+
+SPEC CHECKSUMS:
+  SwiftRangeSlider: f4355136684a1f50e4dc784ab6465d3b181111ff
+
+PODFILE CHECKSUM: ea666c1ba9054f0f9df3c010fafe051800b47b57
+
+COCOAPODS: 1.5.3

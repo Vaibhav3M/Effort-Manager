@@ -2,8 +2,8 @@
 //  ClarificationViewController.swift
 //  Worklist
 //
-//  Created by Bimalesh Sahoo on 05/11/18.
-//  Copyright © 2018 Bimalesh Sahoo. All rights reserved.
+//  Created by Vaibhav M on 05/11/18.
+//  Copyright © 2018 Vaibhav M. All rights reserved.
 //
 
 import UIKit
@@ -33,7 +33,20 @@ class ClarificationViewController: UIViewController {
     
     @IBAction func logoutTapped(_ sender: Any) {
     
-        utilities.logoutAlert()
+        utilities.logoutAlert(controller: self)
     }
+    
+    @IBAction func profileTapped(_ sender: Any) {
+        let profileView = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        
+        self.navigationController?.pushViewController(profileView, animated: true)
+    }
+    
+    @IBAction func notificationTapped(_ sender: Any) {
+        let notificationView = self.storyboard?.instantiateViewController(withIdentifier: "NotificationViewController") as! NotificationViewController
+        
+        self.navigationController?.pushViewController(notificationView, animated: true)
+    }
+    
     
 }
